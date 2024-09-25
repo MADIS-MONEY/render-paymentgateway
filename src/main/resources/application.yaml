@@ -13,18 +13,21 @@ spring:
     hibernate.ddl-auto: update
     show-sql: false
 
-  consul:
-    enabled: true
-    host: ${CONSUL_HOST:render-consul.onrender.com}
-    port: ${CONSUL_PORT:8500}
-    config:
+  cloud:
+    loadbalancer:
+      health-check:
+        enabled: true # Ensure LoadBalancer is using Consul's health check
+    consul:
       enabled: true
-    discovery:
-      enabled: true
-      service-name: gateway-service
-      prefer-ip-address: true
-      heartbeat:
+      host: ${CONSUL_HOST:render-consul.onrender.com}
+      config:
         enabled: true
+      discovery:
+        enabled: true
+        service-name: madis-paymentgateway-service
+        prefer-ip-address: true
+        heartbeat:
+          enabled: true
 info:
   app:
     name: ${spring.application.name}
