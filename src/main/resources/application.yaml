@@ -1,0 +1,85 @@
+spring:
+  application:
+    name: madis-paymentgateway-service
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/madisdb?schema=public}
+    driver-class-name: org.postgresql.Driver
+    username: ${DATABASE_USR:postgres}
+    password: ${DATABASE_USR:5teevyclear!}
+  jackson:
+    default-property-inclusion: NON_EMPTY
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate.ddl-auto: update
+    show-sql: false
+
+  consul:
+    discovery:
+      enabled: true
+      service-name: madis-paymentgateway-service
+    host: ${HOST:localhost}
+    port: 8500
+    config:
+      enabled: false
+info:
+  app:
+    name: ${spring.application.name}
+
+header:
+  hub2:
+    baseurl: https://api.hub2.io
+    currency: XOF
+    businessname: MADIS-WALLET
+    transfer:
+      create: ${header.hub2.baseurl}/transfers
+      retrieve: ${header.hub2.baseurl}/transfers/%s
+      status: ${header.hub2.baseurl}/transfers/status
+    payment:
+      intent: ${header.hub2.baseurl}/payment-intents
+      attempt: ${header.hub2.baseurl}/payment-intents/%s/payments
+      retrieve: ${header.hub2.baseurl}/payment-intents/%s
+      retrieveall: ${header.hub2.baseurl}/payment-intents
+    apikey: sk_vvAi129W8ij8WJwf4U5kKNo1QGJAmcbK #sk_RNUu2trAJDRKaAZURotWzwxrVFSr4omu
+    merchantid: 1wnHrHqoKjGMGXQWzLWt6
+    environment: sandbox
+
+feign:
+  client:
+    config:
+      default:
+        connect-timeout: 5000
+        read-timeout: 5000
+  discovery:
+    enabled: true  # Enables Feign to use Consul for service discovery
+
+springdoc:
+  api-docs:
+    version: OPENAPI_3_0
+    path: /v3/api-docs # OpenAPI docs endpoint for this service
+  swagger-ui:
+    path: /swagger-ui.html # Swagger UI for this service
+
+management:
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+    metrics:
+      enabled: true
+  endpoints:
+    jmx:
+      exposure:
+        include: "*"
+    web:
+      exposure:
+        include: "*"
+      base-path: /actuator
+      cors.allowed-origins: true
+
+logging:
+  level:
+    root: ERROR
+    com.madisfinance.paymentgatewayservice: INFO
+    org.springframework.web: ERROR
+server:
+  port: ${PORT:8081}
