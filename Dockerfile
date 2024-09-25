@@ -17,8 +17,8 @@ FROM eclipse-temurin:21
 WORKDIR /opt
 
 # Expose the application port
-ENV PORT 8090
-EXPOSE 8090
+ENV PORT 8081
+EXPOSE 8081
 
 # Copy the built JAR file from the build stage
 COPY --from=build /app/target/*.jar /opt/madispayment.jar
