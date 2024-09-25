@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.madisfinance.paymentgatewayservice.PaymentgatewayServiceApplicationTests
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 12.932 s - in com.madisfinance.paymentgatewayservice.PaymentgatewayServiceApplicationTests

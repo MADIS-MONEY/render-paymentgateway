@@ -2,10 +2,10 @@ spring:
   application:
     name: madis-paymentgateway-service
   datasource:
-    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/madisdb?schema=public}
+    url: ${DATABASE_URL:jdbc:postgresql://dpg-crp8ipjtq21c7397k1g0-a.oregon-postgres.render.com:5432/madisdb}
     driver-class-name: org.postgresql.Driver
-    username: ${DATABASE_USR:postgres}
-    password: ${DATABASE_PWD:5teevyclear!}
+    username: ${DATABASE_USR:madisdev}
+    password: ${DATABASE_PWD:9yTA0MC77iRjGrY6Y1F86ulAXkaQVfcr}
   jackson:
     default-property-inclusion: NON_EMPTY
   jpa:
@@ -14,13 +14,17 @@ spring:
     show-sql: false
 
   consul:
-    discovery:
-      enabled: true
-      service-name: madis-paymentgateway-service
-    host: ${HOST:localhost}
+    enabled: true
+    host: ${CONSUL_HOST:render-consul.onrender.com}
     port: ${CONSUL_PORT:8500}
     config:
-      enabled: false
+      enabled: true
+    discovery:
+      enabled: true
+      service-name: gateway-service
+      prefer-ip-address: true
+      heartbeat:
+        enabled: true
 info:
   app:
     name: ${spring.application.name}
@@ -50,7 +54,7 @@ feign:
         connect-timeout: 5000
         read-timeout: 5000
   discovery:
-    enabled: true  # Enables Feign to use Consul for service discovery
+    enabled: true # Enables Feign to use Consul for service discovery
 
 springdoc:
   api-docs:
