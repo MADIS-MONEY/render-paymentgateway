@@ -5,7 +5,7 @@ spring:
     url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/madisdb?schema=public}
     driver-class-name: org.postgresql.Driver
     username: ${DATABASE_USR:postgres}
-    password: ${DATABASE_USR:5teevyclear!}
+    password: ${DATABASE_PWD:5teevyclear!}
   jackson:
     default-property-inclusion: NON_EMPTY
   jpa:
