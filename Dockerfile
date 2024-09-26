@@ -18,7 +18,7 @@ WORKDIR /opt
 
 # Expose the application port
 ENV PORT 8081
-EXPOSE 8081 8080 8500
+EXPOSE 8081 8080 8500 8300
 
 # Copy the built JAR file from the build stage
 COPY --from=build /app/target/*.jar /opt/madispayment.jar

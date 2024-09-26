@@ -1,6 +1,19 @@
 spring:
   application:
     name: madis-paymentgateway-service
+  eureka:
+    client:
+      service-url:
+      # Replace with the address of your Eureka server
+        defaultZone: ${EUREKA_SERVER:https://render-ereuka.onrender.com}
+      register-with-eureka: true
+      fetch-registry: true
+    instance:
+      prefer-ip-address: true
+      lease-renewal-interval-in-seconds: 5
+      lease-expiration-duration-in-seconds: 30
+      metadata-map:
+        instanceId: ${spring.application.name}:${server.port}
   datasource:
     url: ${DATABASE_URL:jdbc:postgresql://dpg-crp8ipjtq21c7397k1g0-a.oregon-postgres.render.com:5432/madisdb}
     driver-class-name: org.postgresql.Driver
@@ -17,17 +30,19 @@ spring:
     loadbalancer:
       health-check:
         enabled: true # Ensure LoadBalancer is using Consul's health check
-    consul:
-      enabled: true
-      host: ${CONSUL_HOST:render-consul.onrender.com}
-      config:
-        enabled: true
-      discovery:
-        enabled: true
-        service-name: madis-paymentgateway-service
-        prefer-ip-address: true
-        heartbeat:
-          enabled: true
+    # consul:
+    #   enabled: true
+    #   uri: ${CONSUL_HOST:https://render-consul.onrender.com/}
+    #   #host: ${CONSUL_HOST:216.24.57.4}
+    #   #port: ${CONSUL_PORT:8500}
+    #   config:
+    #     enabled: true
+    #   discovery:
+    #     enabled: true
+    #     service-name: madis-paymentgateway-service
+    #     prefer-ip-address: true
+    #     heartbeat:
+    #       enabled: true
 info:
   app:
     name: ${spring.application.name}
